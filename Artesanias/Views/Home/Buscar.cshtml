@@ -1,0 +1,163 @@
+﻿
+@model List<Artesanias.Models.Producto>
+
+
+<!--primer foreach-->
+<!--/single_page-->
+<!-- /banner_bottom_agile_info -->
+<div class="page-head_agile_info_w3l">
+    <div class="container">
+        <h3>Single <span>Page </span></h3>
+
+        <!--segundo foreach-->
+        <!--/w3_short-->
+        <div class="services-breadcrumb">
+            <div class="agile_inner_breadcrumb">
+
+                <ul class="w3_short">
+                    <li><a href="index.html">Home</a><i>|</i></li>
+                    <li>Single Page</li>
+                </ul>
+            </div>
+        </div>
+        <!--//w3_short-->
+    </div>
+</div>
+
+<!-- banner-bootom-w3-agileits -->
+<div class="banner-bootom-w3-agileits">
+    <div class="container">
+        <!--tercer foreach-->
+        @foreach (var item in Model)
+        {
+            var imagen = @item.ProductoImagen.FirstOrDefault();
+            string img = imagen == null ? "no_disponible.jpg" : imagen.Imagen;
+
+            <div class="col-md-4 single-right-left ">
+                <div class="grid images_3_of_2">
+                    <div class="flexslider">
+
+                        <ul class="slides">
+                            <li data-thumb="~/ImgProductos/@img">
+                                <div class="thumb-image"> <img src="~/ImgProductos/@img" data-imagezoom="true" class="img-responsive"> </div>
+                            </li>
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 single-right-left simpleCart_shelfItem">
+                <h3>@item.Nombre</h3>
+                <p><span class="item_price">S/@item.Precio</span> <del>-S/@item.Precio</del></p>
+
+
+
+
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
+                        <form action="#" method="post">
+                            <fieldset>
+                                <input type="hidden" name="cmd" value="_cart">
+                                <input type="hidden" name="add" value="1">
+                                <input type="hidden" name="business" value=" ">
+                                <input type="hidden" name="item_name" value="Wing Sneakers">
+                                <input type="hidden" name="amount" value="650.00">
+                                <input type="hidden" name="discount_amount" value="1.00">
+                                <input type="hidden" name="currency_code" value="USD">
+                                <input type="hidden" name="return" value=" ">
+                                <input type="hidden" name="cancel_return" value=" ">
+                                <input type="submit" name="submit" value="Add to cart" class="button">
+                            </fieldset>
+                        </form>
+                    </div>
+
+                </div>
+                <ul class="social-nav model-3d-0 footer-social w3_agile_social single_page_w3ls">
+                    <li class="share">Share On : </li>
+                    <li>
+                        <a href="#" class="facebook">
+                            <div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+                            <div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="twitter">
+                            <div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+                            <div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="instagram">
+                            <div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+                            <div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="pinterest">
+                            <div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
+                            <div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="clearfix"> </div>
+            <hr />
+            <!-- /new_arrivals -->
+            <!-- //new_arrivals -->
+            <!--/slider_owl-->
+
+        }
+        
+    </div>
+    </div>
+
+        <!--//single_page-->
+        <!--/grids-->
+        <div class="coupons">
+            <div class="coupons-grids text-center">
+                <div class="w3layouts_mail_grid">
+                    <div class="col-md-3 w3layouts_mail_grid_left">
+                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
+                            <i class="fa fa-truck" aria-hidden="true"></i>
+                        </div>
+                        <div class="w3layouts_mail_grid_left2">
+                            <h3>FREE SHIPPING</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 w3layouts_mail_grid_left">
+                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
+                            <i class="fa fa-headphones" aria-hidden="true"></i>
+                        </div>
+                        <div class="w3layouts_mail_grid_left2">
+                            <h3>24/7 SUPPORT</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 w3layouts_mail_grid_left">
+                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        </div>
+                        <div class="w3layouts_mail_grid_left2">
+                            <h3>MONEY BACK GUARANTEE</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 w3layouts_mail_grid_left">
+                        <div class="w3layouts_mail_grid_left1 hvr-radial-out">
+                            <i class="fa fa-gift" aria-hidden="true"></i>
+                        </div>
+                        <div class="w3layouts_mail_grid_left2">
+                            <h3>FREE GIFT COUPONS</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+
+            </div>
+        </div>
+        <!--grids-->

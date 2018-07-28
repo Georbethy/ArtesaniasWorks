@@ -1,0 +1,707 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TiendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artesano">
+          <Key>
+            <PropertyRef Name="ArtesanoId" />
+          </Key>
+          <Property Name="ArtesanoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Dni" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="LineaArtesania" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ProductoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Carrito">
+          <Key>
+            <PropertyRef Name="CarritoId" />
+          </Key>
+          <Property Name="CarritoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteId" />
+          </Key>
+          <Property Name="ClienteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="255" />
+          <Property Name="Celular" Type="varchar" MaxLength="255" />
+          <Property Name="Direccion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="DetalleCarrito">
+          <Key>
+            <PropertyRef Name="DetalleCarritoId" />
+          </Key>
+          <Property Name="DetalleCarritoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="CarritoId" Type="int" Nullable="false" />
+          <Property Name="ProductoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LineaArtesnia">
+          <Key>
+            <PropertyRef Name="LineaArtesaniaId" />
+          </Key>
+          <Property Name="LineaArtesaniaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreLinea" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="ProductoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoId" />
+          </Key>
+          <Property Name="PedidoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="char" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoDetalle">
+          <Key>
+            <PropertyRef Name="PedidoDetalle" />
+          </Key>
+          <Property Name="PedidoDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoId" Type="int" Nullable="false" />
+          <Property Name="ProductoId" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Categoria" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Existencias" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductoImagen">
+          <Key>
+            <PropertyRef Name="ProductoImagenId" />
+          </Key>
+          <Property Name="ProductoImagenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductoId" Type="int" Nullable="false" />
+          <Property Name="Imagen" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="RolId" />
+          </Key>
+          <Property Name="RolId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreRol" Type="varchar" MaxLength="225" Nullable="false" />
+          <Property Name="ClienteId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Artesano__Produc__276EDEB3">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Artesano" Type="Self.Artesano" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Artesano">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Carrito__Cliente__4316F928">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Carrito">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__Carri__46E78A0C">
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="1" />
+          <End Role="DetalleCarrito" Type="Self.DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrito">
+              <PropertyRef Name="CarritoId" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="CarritoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__Produ__47DBAE45">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleCarrito" Type="Self.DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LineaArte__Produ__2A4B4B5E">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="LineaArtesnia" Type="Self.LineaArtesnia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="LineaArtesnia">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__ClienteI__4D94879B">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PedidoDet__Pedid__5070F446">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoDetalle" Type="Self.PedidoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="PedidoId" />
+            </Principal>
+            <Dependent Role="PedidoDetalle">
+              <PropertyRef Name="PedidoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PedidoDet__Produ__5165187F">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="PedidoDetalle" Type="Self.PedidoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="PedidoDetalle">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductoI__Produ__2D27B809">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="ProductoImagen" Type="Self.ProductoImagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="ProductoImagen">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rol__ClienteId__4AB81AF0">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Rol" Type="Self.Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Rol">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TiendaModelStoreContainer">
+          <EntitySet Name="Artesano" EntityType="Self.Artesano" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleCarrito" EntityType="Self.DetalleCarrito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LineaArtesnia" EntityType="Self.LineaArtesnia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoDetalle" EntityType="Self.PedidoDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductoImagen" EntityType="Self.ProductoImagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Artesano__Produc__276EDEB3" Association="Self.FK__Artesano__Produc__276EDEB3">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Artesano" EntitySet="Artesano" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Carrito__Cliente__4316F928" Association="Self.FK__Carrito__Cliente__4316F928">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Carrito" EntitySet="Carrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__Carri__46E78A0C" Association="Self.FK__DetalleCa__Carri__46E78A0C">
+            <End Role="Carrito" EntitySet="Carrito" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__Produ__47DBAE45" Association="Self.FK__DetalleCa__Produ__47DBAE45">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LineaArte__Produ__2A4B4B5E" Association="Self.FK__LineaArte__Produ__2A4B4B5E">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="LineaArtesnia" EntitySet="LineaArtesnia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__ClienteI__4D94879B" Association="Self.FK__Pedido__ClienteI__4D94879B">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PedidoDet__Pedid__5070F446" Association="Self.FK__PedidoDet__Pedid__5070F446">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoDetalle" EntitySet="PedidoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PedidoDet__Produ__5165187F" Association="Self.FK__PedidoDet__Produ__5165187F">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PedidoDetalle" EntitySet="PedidoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductoI__Produ__2D27B809" Association="Self.FK__ProductoI__Produ__2D27B809">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoImagen" EntitySet="ProductoImagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rol__ClienteId__4AB81AF0" Association="Self.FK__Rol__ClienteId__4AB81AF0">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Rol" EntitySet="Rol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TiendaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artesano">
+          <Key>
+            <PropertyRef Name="ArtesanoId" />
+          </Key>
+          <Property Name="ArtesanoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dni" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LineaArtesania" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Artesano__Produc__276EDEB3" FromRole="Artesano" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Carrito">
+          <Key>
+            <PropertyRef Name="CarritoId" />
+          </Key>
+          <Property Name="CarritoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Carrito__Cliente__4316F928" FromRole="Carrito" ToRole="Cliente" />
+          <NavigationProperty Name="DetalleCarrito" Relationship="Self.FK__DetalleCa__Carri__46E78A0C" FromRole="Carrito" ToRole="DetalleCarrito" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteId" />
+          </Key>
+          <Property Name="ClienteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Clave" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carrito" Relationship="Self.FK__Carrito__Cliente__4316F928" FromRole="Cliente" ToRole="Carrito" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK__Pedido__ClienteI__4D94879B" FromRole="Cliente" ToRole="Pedido" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Rol__ClienteId__4AB81AF0" FromRole="Cliente" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="DetalleCarrito">
+          <Key>
+            <PropertyRef Name="DetalleCarritoId" />
+          </Key>
+          <Property Name="DetalleCarritoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubTotal" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="CarritoId" Type="Int32" Nullable="false" />
+          <Property Name="ProductoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Carrito" Relationship="Self.FK__DetalleCa__Carri__46E78A0C" FromRole="DetalleCarrito" ToRole="Carrito" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__DetalleCa__Produ__47DBAE45" FromRole="DetalleCarrito" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="LineaArtesnia">
+          <Key>
+            <PropertyRef Name="LineaArtesaniaId" />
+          </Key>
+          <Property Name="LineaArtesaniaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreLinea" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__LineaArte__Produ__2A4B4B5E" FromRole="LineaArtesnia" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="PedidoId" />
+          </Key>
+          <Property Name="PedidoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Pedido__ClienteI__4D94879B" FromRole="Pedido" ToRole="Cliente" />
+          <NavigationProperty Name="PedidoDetalle" Relationship="Self.FK__PedidoDet__Pedid__5070F446" FromRole="Pedido" ToRole="PedidoDetalle" />
+        </EntityType>
+        <EntityType Name="PedidoDetalle">
+          <Key>
+            <PropertyRef Name="PedidoDetalle1" />
+          </Key>
+          <Property Name="PedidoDetalle1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoId" Type="Int32" Nullable="false" />
+          <Property Name="ProductoId" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK__PedidoDet__Pedid__5070F446" FromRole="PedidoDetalle" ToRole="Pedido" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__PedidoDet__Produ__5165187F" FromRole="PedidoDetalle" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ProductoId" />
+          </Key>
+          <Property Name="ProductoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Categoria" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="Existencias" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Artesano" Relationship="Self.FK__Artesano__Produc__276EDEB3" FromRole="Producto" ToRole="Artesano" />
+          <NavigationProperty Name="DetalleCarrito" Relationship="Self.FK__DetalleCa__Produ__47DBAE45" FromRole="Producto" ToRole="DetalleCarrito" />
+          <NavigationProperty Name="LineaArtesnia" Relationship="Self.FK__LineaArte__Produ__2A4B4B5E" FromRole="Producto" ToRole="LineaArtesnia" />
+          <NavigationProperty Name="PedidoDetalle" Relationship="Self.FK__PedidoDet__Produ__5165187F" FromRole="Producto" ToRole="PedidoDetalle" />
+          <NavigationProperty Name="ProductoImagen" Relationship="Self.FK__ProductoI__Produ__2D27B809" FromRole="Producto" ToRole="ProductoImagen" />
+        </EntityType>
+        <EntityType Name="ProductoImagen">
+          <Key>
+            <PropertyRef Name="ProductoImagenId" />
+          </Key>
+          <Property Name="ProductoImagenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductoId" Type="Int32" Nullable="false" />
+          <Property Name="Imagen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__ProductoI__Produ__2D27B809" FromRole="ProductoImagen" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="RolId" />
+          </Key>
+          <Property Name="RolId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreRol" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Rol__ClienteId__4AB81AF0" FromRole="Rol" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK__Artesano__Produc__276EDEB3">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Artesano" Type="Self.Artesano" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="Artesano">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Carrito__Cliente__4316F928">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Carrito">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__Carri__46E78A0C">
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="1" />
+          <End Role="DetalleCarrito" Type="Self.DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrito">
+              <PropertyRef Name="CarritoId" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="CarritoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__ClienteI__4D94879B">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rol__ClienteId__4AB81AF0">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Rol" Type="Self.Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Rol">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__Produ__47DBAE45">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="DetalleCarrito" Type="Self.DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LineaArte__Produ__2A4B4B5E">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="LineaArtesnia" Type="Self.LineaArtesnia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="LineaArtesnia">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PedidoDet__Pedid__5070F446">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoDetalle" Type="Self.PedidoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="PedidoId" />
+            </Principal>
+            <Dependent Role="PedidoDetalle">
+              <PropertyRef Name="PedidoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PedidoDet__Produ__5165187F">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="PedidoDetalle" Type="Self.PedidoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="PedidoDetalle">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductoI__Produ__2D27B809">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+          <End Role="ProductoImagen" Type="Self.ProductoImagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ProductoId" />
+            </Principal>
+            <Dependent Role="ProductoImagen">
+              <PropertyRef Name="ProductoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TiendaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artesano" EntityType="Self.Artesano" />
+          <EntitySet Name="Carrito" EntityType="Self.Carrito" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="DetalleCarrito" EntityType="Self.DetalleCarrito" />
+          <EntitySet Name="LineaArtesnia" EntityType="Self.LineaArtesnia" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="PedidoDetalle" EntityType="Self.PedidoDetalle" />
+          <EntitySet Name="Producto" EntityType="Self.Producto" />
+          <EntitySet Name="ProductoImagen" EntityType="Self.ProductoImagen" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <AssociationSet Name="FK__Artesano__Produc__276EDEB3" Association="Self.FK__Artesano__Produc__276EDEB3">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Artesano" EntitySet="Artesano" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Carrito__Cliente__4316F928" Association="Self.FK__Carrito__Cliente__4316F928">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Carrito" EntitySet="Carrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__Carri__46E78A0C" Association="Self.FK__DetalleCa__Carri__46E78A0C">
+            <End Role="Carrito" EntitySet="Carrito" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__ClienteI__4D94879B" Association="Self.FK__Pedido__ClienteI__4D94879B">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rol__ClienteId__4AB81AF0" Association="Self.FK__Rol__ClienteId__4AB81AF0">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Rol" EntitySet="Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__Produ__47DBAE45" Association="Self.FK__DetalleCa__Produ__47DBAE45">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LineaArte__Produ__2A4B4B5E" Association="Self.FK__LineaArte__Produ__2A4B4B5E">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="LineaArtesnia" EntitySet="LineaArtesnia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PedidoDet__Pedid__5070F446" Association="Self.FK__PedidoDet__Pedid__5070F446">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoDetalle" EntitySet="PedidoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PedidoDet__Produ__5165187F" Association="Self.FK__PedidoDet__Produ__5165187F">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PedidoDetalle" EntitySet="PedidoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductoI__Produ__2D27B809" Association="Self.FK__ProductoI__Produ__2D27B809">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="ProductoImagen" EntitySet="ProductoImagen" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TiendaModelStoreContainer" CdmEntityContainer="TiendaEntities">
+          <EntitySetMapping Name="Artesano">
+            <EntityTypeMapping TypeName="TiendaModel.Artesano">
+              <MappingFragment StoreEntitySet="Artesano">
+                <ScalarProperty Name="ArtesanoId" ColumnName="ArtesanoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="LineaArtesania" ColumnName="LineaArtesania" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carrito">
+            <EntityTypeMapping TypeName="TiendaModel.Carrito">
+              <MappingFragment StoreEntitySet="Carrito">
+                <ScalarProperty Name="CarritoId" ColumnName="CarritoId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="TiendaModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleCarrito">
+            <EntityTypeMapping TypeName="TiendaModel.DetalleCarrito">
+              <MappingFragment StoreEntitySet="DetalleCarrito">
+                <ScalarProperty Name="DetalleCarritoId" ColumnName="DetalleCarritoId" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="CarritoId" ColumnName="CarritoId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LineaArtesnia">
+            <EntityTypeMapping TypeName="TiendaModel.LineaArtesnia">
+              <MappingFragment StoreEntitySet="LineaArtesnia">
+                <ScalarProperty Name="LineaArtesaniaId" ColumnName="LineaArtesaniaId" />
+                <ScalarProperty Name="NombreLinea" ColumnName="NombreLinea" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="TiendaModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="PedidoId" ColumnName="PedidoId" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoDetalle">
+            <EntityTypeMapping TypeName="TiendaModel.PedidoDetalle">
+              <MappingFragment StoreEntitySet="PedidoDetalle">
+                <ScalarProperty Name="PedidoDetalle1" ColumnName="PedidoDetalle" />
+                <ScalarProperty Name="PedidoId" ColumnName="PedidoId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producto">
+            <EntityTypeMapping TypeName="TiendaModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Existencias" ColumnName="Existencias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoImagen">
+            <EntityTypeMapping TypeName="TiendaModel.ProductoImagen">
+              <MappingFragment StoreEntitySet="ProductoImagen">
+                <ScalarProperty Name="ProductoImagenId" ColumnName="ProductoImagenId" />
+                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="TiendaModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="RolId" ColumnName="RolId" />
+                <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
